@@ -1,20 +1,10 @@
-// Selecting the DOM Element for manipulation
+# Promise Task Numverify API
 
-const searchInput = document.querySelector(".search__box");
-const flag = document.querySelector(".flag__img-container");
+### generateOptions function
 
-// Initializing timer variable for key press events.
-let timer;
+    This function is used to read countries.json file and render countries options.
 
-// Initial call for generating country options
-
-generateOptions();
-
-// Selecting the DOM Element for manipulation as it is only created after calling generate option function.
-
-const options = document.querySelector(".options__block");
-const countryOptionsBlock = document.querySelector(".search__country");
-
+```js
 // function to display counties options
 async function generateOptions(filterParams = "") {
   // Reading countries.json file
@@ -62,7 +52,15 @@ async function generateOptions(filterParams = "") {
     });
   }
 }
+```
 
+### Event Listerners
+
+## Search input event listening.
+
+    The below event listerner is used to listen for a keyup event inside the search input field.
+
+```js
 // Attach an event listener for keyup event on the search input field
 searchInput.addEventListener("keyup", (e) => {
   // The below code is to clear unwanted key press for optimisation.
@@ -75,12 +73,24 @@ searchInput.addEventListener("keyup", (e) => {
     generateOptions(e.target.value);
   }, 800);
 });
+```
 
+## Flag image click event listening for showing/hiding countries options.
+
+    The below event listerner is used to listen for a mouse click event on the flag image in the phone number input field.
+
+```js
 // This listens for the click events on the flag on the input field for showing/hiding countries options.
 flag.addEventListener("click", () => {
   countryOptionsBlock.classList.toggle("height");
 });
+```
 
+## Selecting a option to change the input flag and dialling code.
+
+    The below code is to select tje required options for the API call.
+
+```js
 // This event is to select a required dialling code and flag image.
 options.addEventListener("click", (e) => {
   // The below variables are for getting the selected options values.
@@ -97,3 +107,5 @@ options.addEventListener("click", (e) => {
   searchInput.value = "";
   generateOptions();
 });
+``;
+```
