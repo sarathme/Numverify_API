@@ -130,7 +130,7 @@ form.addEventListener("submit", async (e) => {
 
     // initializing dispaly text
     let modalHTML = "";
-
+    console.log(verifiedData);
     // Check is the recieved response valid
     if (verifiedData.valid) {
       // Populating the UI text for the modal
@@ -151,7 +151,7 @@ form.addEventListener("submit", async (e) => {
     }
     // If the number is not valid alter the modal text
     else {
-      modalHTML = `<p>is not a valid phone number.</p>`;
+      modalHTML = `<p>${verifiedData.international_format} is not a valid phone number.</p>`;
     }
 
     // Display the modal with the response.
