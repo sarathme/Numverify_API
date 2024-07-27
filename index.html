@@ -9,7 +9,8 @@
   <body>
     <div class="container">
       <h1 class="heading__primary">Please verify your phone number</h1>
-      <form action="" class="form">
+      <p class="description">Click on the flag icon for selecting a country</p>
+      <form class="form">
         <div class="input__group">
           <div class="country__flag">
             <div class="flag__img-container">
@@ -21,25 +22,45 @@
             type="tel"
             id="phone"
             class="phone"
-            placeholder="Please enter a phone number " />
+            placeholder="Please enter a phone number "
+            required />
+          <button type="submit" class="submit_btn"
+            ><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+              <path
+                d="M438.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-160-160c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L338.8 224 32 224c-17.7 0-32 14.3-32 32s14.3 32 32 32l306.7 0L233.4 393.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l160-160z" /></svg
+          ></button>
         </div>
+
         <div class="search__country">
           <input
             type="text"
             class="search__box"
-            placeholder="Search for a country name" />
+            placeholder="Search for a country name here" />
           <div class="options__block"></div>
-          <!-- <div class="options">
-            <div class="img-options"
-              ><img src="https://flagcdn.com/in.svg" alt="" srcset=""
-            /></div>
-            <span>+91</span>
-            <span>India</span>
-          </div> -->
         </div>
       </form>
-
-      <script src="./script.js"></script>
     </div>
+    <div class="overlay"></div>
+    <div class="modal">
+      <div class="modal-header">
+        <button class="close-btn">X</button>
+      </div>
+      <div class="modal-content">
+        <p> is a valid number</p>
+        <div class="country evencolumns">
+          <h2>Country</h2>
+          <p>fdszgfdxhgcfjhgvkh</p>
+        </div>
+        <div class="location evencolumns">
+          <h2>Location</h2>
+          <p>zsgfxdhgjcfh</p>
+        </div>
+        <div class="line-type evencolumns">
+          <h2>Line-type</h2>
+          <p>zfxhdgjcfkhgj</p> </div
+        >`
+      </div>
+    </div>
+    <script src="./script.js"></script>
   </body>
 </html>

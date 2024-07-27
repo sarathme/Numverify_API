@@ -1,0 +1,22 @@
+{
+  "name": "day20_task_numverifyapi",
+  "version": "1.0.0",
+  "description": "NumverifyAPI task to verify a number",
+  "main": "script.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sarathme/Numverify_API.git"
+  },
+  "author": "Sarasraman",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sarathme/Numverify_API/issues"
+  },
+  "homepage": "https://github.com/sarathme/Numverify_API#readme",
+  "devDependencies": {
+    "netlify-cli": "^17.33.4"
+  }
+}

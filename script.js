@@ -2,6 +2,10 @@
 
 const searchInput = document.querySelector(".search__box");
 const flag = document.querySelector(".flag__img-container");
+const submitBtn = document.querySelector(".submit_btn");
+const form = document.querySelector(".form");
+const modal = document.querySelector(".modal");
+const overlay = document.querySelector(".overlay");
 
 // Initializing timer variable for key press events.
 let timer;
@@ -69,7 +73,7 @@ searchInput.addEventListener("keyup", (e) => {
 
   // This clears the timer
   window.clearTimeout(timer);
-  console.log(e.target.value);
+
   // This initiate the timer which excutes the callback and creates the country options for the last key press
   timer = window.setTimeout(() => {
     generateOptions(e.target.value);
@@ -79,6 +83,7 @@ searchInput.addEventListener("keyup", (e) => {
 // This listens for the click events on the flag on the input field for showing/hiding countries options.
 flag.addEventListener("click", () => {
   countryOptionsBlock.classList.toggle("height");
+  searchInput.focus();
 });
 
 // This event is to select a required dialling code and flag image.
@@ -96,4 +101,90 @@ options.addEventListener("click", (e) => {
   countryOptionsBlock.classList.remove("height");
   searchInput.value = "";
   generateOptions();
+});
+
+console.log(form);
+
+// Handling Form submit
+form.addEventListener("submit", async (e) => {
+  e.preventDefault();
+
+  // Getting the inputted diallingCode and phone number
+  const phoneNumber = document.getElementById("phone").value.trim();
+  const diallingCode = document
+    .getElementById("dialling-code")
+    .innerText.slice(1)
+    .trim();
+
+  const queryNumber = diallingCode + phoneNumber;
+
+  // Check if the provided number is valid
+  if (!isNaN(queryNumber)) {
+    // API Call to verify number
+    const res = await fetch(
+      `.netlify/functions/verify-number?number=${queryNumber}`
+    );
+
+    const verifiedData = await res.json();
+    const modalBody = modal.querySelector(".modal-content");
+
+    // initializing dispaly text
+    let modalHTML = "";
+
+    // Check is the recieved response valid
+    if (verifiedData.valid) {
+      // Populating the UI text for the modal
+      modalHTML = `
+      <p>${verifiedData.international_format} is a valid number</p>
+      <div class="country evencolumns">
+          <h2>Country</h2>
+          <p>${verifiedData.country_name}</p>
+        </div>
+        <div class="location evencolumns">
+          <h2>Location</h2>
+          <p>${verifiedData.location}</p>
+        </div>
+        <div class="line-type evencolumns">
+          <h2>Line-type</h2>
+          <p>${verifiedData.line_type}</p>
+        </div>`;
+    }
+    // If the number is not valid alter the modal text
+    else {
+      modalHTML = `<p>is not a valid phone number.</p>`;
+    }
+
+    // Display the modal with the response.
+    modalBody.innerHTML = modalHTML;
+    openModal();
+  } else {
+    alert("Please provide a valid phone number");
+  }
+
+  e.target.reset();
+});
+
+function openModal() {
+  overlay.style.display = "block";
+  modal.style.display = "block";
+  modal.classList.add("opacity");
+  overlay.classList.add("opacity");
+}
+
+function closeModal() {
+  overlay.style.display = "none";
+  modal.style.display = "none";
+  modal.classList.remove("opacity");
+  overlay.classList.remove("opacity");
+}
+
+overlay.addEventListener("click", (e) => {
+  closeModal();
+});
+
+modal.addEventListener("click", (e) => {
+  const closeBtn = e.target.closest(".close-btn");
+  if (!closeBtn) return;
+  console.log(closeBtn);
+  closeModal();
 });

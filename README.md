@@ -109,3 +109,95 @@ options.addEventListener("click", (e) => {
 });
 ``;
 ```
+
+## Opening and Closing Modal
+
+```js
+function openModal() {
+  overlay.style.display = "block";
+  modal.style.display = "block";
+  modal.classList.add("opacity");
+  overlay.classList.add("opacity");
+}
+
+function closeModal() {
+  overlay.style.display = "none";
+  modal.style.display = "none";
+  modal.classList.remove("opacity");
+  overlay.classList.remove("opacity");
+}
+
+overlay.addEventListener("click", (e) => {
+  closeModal();
+});
+
+modal.addEventListener("click", (e) => {
+  const closeBtn = e.target.closest(".close-btn");
+  if (!closeBtn) return;
+  console.log(closeBtn);
+  closeModal();
+});
+```
+
+## Making the API call
+
+```js
+// Handling Form submit
+form.addEventListener("submit", async (e) => {
+  e.preventDefault();
+
+  // Getting the inputted diallingCode and phone number
+  const phoneNumber = document.getElementById("phone").value.trim();
+  const diallingCode = document
+    .getElementById("dialling-code")
+    .innerText.slice(1)
+    .trim();
+
+  const queryNumber = diallingCode + phoneNumber;
+
+  // Check if the provided number is valid
+  if (!isNaN(queryNumber)) {
+    // API Call to verify number
+    const res = await fetch(
+      `.netlify/functions/verify-number?number=${queryNumber}`
+    );
+
+    const verifiedData = await res.json();
+    const modalBody = modal.querySelector(".modal-content");
+
+    // initializing dispaly text
+    let modalHTML = "";
+
+    // Check is the recieved response valid
+    if (verifiedData.valid) {
+      // Populating the UI text for the modal
+      modalHTML = `
+      <p>${verifiedData.international_format} is a valid number</p>
+      <div class="country evencolumns">
+          <h2>Country</h2>
+          <p>${verifiedData.country_name}</p>
+        </div>
+        <div class="location evencolumns">
+          <h2>Location</h2>
+          <p>${verifiedData.location}</p>
+        </div>
+        <div class="line-type evencolumns">
+          <h2>Line-type</h2>
+          <p>${verifiedData.line_type}</p>
+        </div>`;
+    }
+    // If the number is not valid alter the modal text
+    else {
+      modalHTML = `<p>is not a valid phone number.</p>`;
+    }
+
+    // Display the modal with the response.
+    modalBody.innerHTML = modalHTML;
+    openModal();
+  } else {
+    alert("Please provide a valid phone number");
+  }
+
+  e.target.reset();
+});
+```
