@@ -103,8 +103,6 @@ options.addEventListener("click", (e) => {
   generateOptions();
 });
 
-console.log(form);
-
 // Handling Form submit
 form.addEventListener("submit", async (e) => {
   e.preventDefault();
@@ -130,7 +128,6 @@ form.addEventListener("submit", async (e) => {
 
     // initializing dispaly text
     let modalHTML = "";
-    console.log(verifiedData);
     // Check is the recieved response valid
     if (verifiedData.valid) {
       // Populating the UI text for the modal
@@ -185,6 +182,5 @@ overlay.addEventListener("click", (e) => {
 modal.addEventListener("click", (e) => {
   const closeBtn = e.target.closest(".close-btn");
   if (!closeBtn) return;
-  console.log(closeBtn);
   closeModal();
 });
